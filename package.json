@@ -1,0 +1,23 @@
+{
+  "name": "finalapifutsal",
+  "version": "1.0.0",
+  "description": "Api for andriod and website",
+  "main": "index.js",
+  "scripts": {
+    "start": "index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gShakya1997/APIFinalAssignment.git"
+  },
+  "author": "Gunjan Shakya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gShakya1997/APIFinalAssignment/issues"
+  },
+  "homepage": "https://github.com/gShakya1997/APIFinalAssignment#readme",
+  "dependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
