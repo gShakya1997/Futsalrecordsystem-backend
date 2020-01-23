@@ -24,3 +24,10 @@ mongoose.connect(process.env.URL, {
 app.listen(process.env.PORT,()=>{
     console.log(`App is running at localhost:${process.env.PORT}`);
 });
+
+//error handler
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.statusCode = 500;
+    res.json({ status: err.message });
+});
