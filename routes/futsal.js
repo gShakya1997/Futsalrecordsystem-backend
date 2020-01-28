@@ -1,31 +1,32 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const User = require("../model/users");
+const Futsal = require("../model/futsal");
 const router = express.Router();
+const auth = require("../auth");
 
-
-//registration
+//register
 router.post("/register", (req, res, next) => {
-    let password = req.body.password;
-    bcrypt.hash(password, 7, (err, hash) => {
-        console.log(err);
+    let hashPassword = req.body.futsalPassword;
+    bcrypt.hash(hashPassword, 7, function (err, hash) {
         if (err) {
             let err = new Error("Could not hash");
             err.status = 500;
             return next(err);
         }
-        User.create({
-            username: req.body.username,
-            address: req.body.address,
-            email: req.body.email,
-            phone: req.body.phone,
-            password: hash,
-            gender: req.body.gender,
-            image: req.body.image
+        Futsal.create({
+            futsalName: req.body.futsalName,
+            futsalAddress: req.body.futsalAddress,
+            futsalEmail: req.body.futsalEmail,
+            futsalPhone: req.body.futsalPhone,
+            futsalPassword: hash,
+            futsalOpeningTime: req.body.futsalOpeningTime,
+            futsalClosingTime: req.body.futsalClosingTime,
+            futsalPrice: req.body.futsalPrice,
+            futsalImage: req.body.futsalImage
         })
-            .then((user) => {
-                let token = jwt.sign({ _id: user._id }, process.env.SECRET);
+            .then((futsal) => {
+                let token = jwt.sign({ _id: futsal._id }, process.env.SECRET);
                 res.json({
                     status: "Registered Successfully!",
                     token: token
@@ -37,17 +38,17 @@ router.post("/register", (req, res, next) => {
 
 //login
 router.post("/login", (req, res, next) => {
-    console.log(req.body);
-    User.findOne({
-        username: req.body.username
+    // console.log(req.body);
+    Futsal.findOne({
+        futsalName: req.body.futsalName
     })
-        .then((user) => {
-            if (user == null) {
-                let err = new Error("User not found");
+        .then((futsal) => {
+            if (futsal == null) {
+                let err = new Error("Futsal not found");
                 err.status = 401;
                 return next(err);
             } else {
-                bcrypt.compare(req.body.password, user.password)
+                bcrypt.compare(req.body.futsalPassword, futsal.futsalPassword)
                     .then((isMatch) => {
                         if (!isMatch) {
                             let err = new Error("Password doesn't match. Try again!");
@@ -55,7 +56,7 @@ router.post("/login", (req, res, next) => {
                             return next(err);
                         }
                         let token = jwt.sign({
-                            _id: user._id,
+                            _id: futsal._id,
                         }, process.env.SECRET);
                         res.json({
                             status: "Login successful",
@@ -65,6 +66,12 @@ router.post("/login", (req, res, next) => {
                     }).catch(next);
             }
         }).catch(next);
+})
+
+//get profile detail
+router.get("/profile", auth.verifyUser, (req, res, next) => {
+    // console.log(req.futsal);
+    res.json({_id:req.futsal._id, futsalName:req.futsal.futsalName, futsalImage:req.futsal.futsalImage});
 })
 
 module.exports = router;

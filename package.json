@@ -4,7 +4,7 @@
   "description": "Api for andriod and website",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --ignore ./public/uploads index.js",
+    "start": "nodemon --ignore ./public/upload index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

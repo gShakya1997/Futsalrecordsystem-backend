@@ -4,6 +4,9 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
 const userRouter = require("./routes/users");
+const uploadRouter = require("./routes/upload");
+const futsalRouter = require("./routes/futsal");
+const auth = require("./auth");
 
 const app = express();
 app.options("*", cors());
@@ -14,6 +17,9 @@ app.use(express.static(__dirname + "/public"));
 
 //routes
 app.use("/users", userRouter);
+app.use("/upload", uploadRouter);
+app.use("/futsal", futsalRouter);
+app.use(auth.verifyUser);
 
 //database config
 mongoose.connect(process.env.URL, {
