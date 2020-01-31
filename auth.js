@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Futsal = require("./model/futsal");
 
-
 module.exports.verifyUser = (req, res, next) => {
     let authHeader = req.headers.authorization;
     if (!authHeader) {

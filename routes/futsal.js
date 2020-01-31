@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Futsal = require("../model/futsal");
+const Customers = require("../model/customers");
 const router = express.Router();
 const auth = require("../auth");
 
@@ -71,7 +72,13 @@ router.post("/login", (req, res, next) => {
 //get profile detail
 router.get("/profile", auth.verifyUser, (req, res, next) => {
     // console.log(req.futsal);
-    res.json({_id:req.futsal._id, futsalName:req.futsal.futsalName, futsalImage:req.futsal.futsalImage});
-})
+    res.json({
+        _id: req.futsal._id,
+        futsalName: req.futsal.futsalName,
+        futsalImage: req.futsal.futsalImage,
+        futsalEmail: req.futsal.futsalEmail,
+        futsalPhone: req.futsal.futsalPhone
+    });
+});
 
 module.exports = router;
