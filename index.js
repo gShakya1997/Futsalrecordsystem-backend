@@ -7,6 +7,7 @@ const userRouter = require("./routes/users");
 const uploadRouter = require("./routes/upload");
 const futsalRouter = require("./routes/futsal");
 const customerRouter = require("./routes/customers");
+const eventRouter = require("./routes/events");
 const auth = require("./auth");
 
 const app = express();
@@ -22,6 +23,7 @@ app.use("/upload", uploadRouter);
 app.use("/futsal", futsalRouter);
 app.use(auth.verifyUser);
 app.use("/customers", customerRouter);
+app.use("/events",eventRouter);
 
 //database config
 mongoose.connect(process.env.URL, {
