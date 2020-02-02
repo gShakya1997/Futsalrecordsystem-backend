@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../model/users");
+const Futsal = require("../model/futsal");
 const router = express.Router();
 
 
@@ -66,5 +67,16 @@ router.post("/login", (req, res, next) => {
             }
         }).catch(next);
 })
+
+router.get("/futsalList", (req, res, next) => {
+    Futsal.find()
+        .then((futsal) => {
+            console.log(futsal);
+            res.json(futsal);
+        })
+        .catch((err)=>{
+            next(err);
+        });
+});
 
 module.exports = router;

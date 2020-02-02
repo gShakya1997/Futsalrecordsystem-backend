@@ -26,14 +26,14 @@ router.route("/")
 
 router.route("/:customerFullname")
     .get((req, res, next) => {
-        Customer.find({ customerFullname: req.params.customerFullname })
-        .then((customers)=>{
-            console.log(customers);
-            res.json(customers);
-        })
-        .catch((err)=>{
-            next(err)
-        });
+        Customer.find({ owner: req.futsal.id, customerFullname: req.params.customerFullname })
+            .then((customers) => {
+                console.log(customers);
+                res.json(customers);
+            })
+            .catch((err) => {
+                next(err)
+            });
     });
 
 router.route("/:id")
