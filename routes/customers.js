@@ -24,21 +24,33 @@ router.route("/")
             }).catch(next);
     });
 
+router.route("/:customerFullname")
+    .get((req, res, next) => {
+        Customer.find({ customerFullname: req.params.customerFullname })
+        .then((customers)=>{
+            console.log(customers);
+            res.json(customers);
+        })
+        .catch((err)=>{
+            next(err)
+        });
+    });
+
 router.route("/:id")
     .put((req, res, next) => {
         console.log(req.body);
         Customer.findOneAndUpdate({ owner: req.futsal._id, _id: req.params.id }, { $set: req.body }, { new: true })
             .then((reply) => {
-                if(reply==null) throw new Error("Customer not found");
+                if (reply == null) throw new Error("Customer not found");
                 res.json(reply);
             }).catch(next);
     })
-    .delete((req,res,next)=>{
-        Customer.findOneAndDelete({owner:req.futsal._id,_id:req.params.id})
-        .then((customer)=>{
-            if (customer == null) throw new Error("Customer not found");
-            res.json(customer);
-        }).catch(next);
+    .delete((req, res, next) => {
+        Customer.findOneAndDelete({ owner: req.futsal._id, _id: req.params.id })
+            .then((customer) => {
+                if (customer == null) throw new Error("Customer not found");
+                res.json(customer);
+            }).catch(next);
     });
 
 
