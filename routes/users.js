@@ -3,7 +3,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../model/users");
 const Futsal = require("../model/futsal");
+const Event = require("../model/events");
 const router = express.Router();
+const auth = require("../auth");
 
 
 //registration
@@ -68,15 +70,41 @@ router.post("/login", (req, res, next) => {
         }).catch(next);
 })
 
-router.get("/futsalList", (req, res, next) => {
+//futsal list
+router.get("/futsalList", auth.verifyUser2, (req, res, next) => {
     Futsal.find()
         .then((futsal) => {
             console.log(futsal);
             res.json(futsal);
         })
-        .catch((err)=>{
+        .catch((err) => {
             next(err);
         });
+});
+
+//Event list
+router.get("/eventList", auth.verifyUser2, (req, res, next) => {
+    Event.find()
+    .then((event)=>{
+        console.log(event);
+        res.json(event);
+    })
+    .catch((err)=>{
+        next(err);
+    });
+});
+
+//Get profile
+router.get("/profile", auth.verifyUser2, (req, res, next) => {
+    console.log(req.users);
+    res.json({
+        _id: req.users._id,
+        username: req.users.username,
+        image: req.users.image,
+        address: req.users.address,
+        email: req.users.email,
+        phone: req.users.phone
+    });
 });
 
 module.exports = router;

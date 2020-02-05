@@ -2,7 +2,6 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Futsal = require("../model/futsal");
-const Customers = require("../model/customers");
 const router = express.Router();
 const auth = require("../auth");
 
@@ -24,7 +23,7 @@ router.post("/register", (req, res, next) => {
             futsalOpeningTime: req.body.futsalOpeningTime,
             futsalClosingTime: req.body.futsalClosingTime,
             futsalPrice: req.body.futsalPrice,
-            futsalImage: req.body.futsalImage
+            futsalImage: req.body.futsalImage,
         })
             .then((futsal) => {
                 let token = jwt.sign({ _id: futsal._id }, process.env.SECRET);
@@ -79,6 +78,22 @@ router.get("/profile", auth.verifyUser, (req, res, next) => {
         futsalEmail: req.futsal.futsalEmail,
         futsalPhone: req.futsal.futsalPhone
     });
+});
+
+router.post("/logout", auth.verifyUser, (req, res, next) => {
+    console.log(req.futsal);
+    console.log(req.headers.authorization);
+    let clearToken = req.headers.authorization;
+    if (req.futsal) {
+        res.json({
+            clearToken: "",
+            status: "Logout"
+        })
+    } else {
+        let err = new Error("You are not logged in");
+        err.status = 403;
+        next(err);
+    }
 });
 
 module.exports = router;

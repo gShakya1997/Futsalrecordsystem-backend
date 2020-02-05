@@ -5,7 +5,7 @@ const feedbacksSchema = new mongoose.Schema({
         type: String
     },
     feedback: {
-        type: String,
+        type: String
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,

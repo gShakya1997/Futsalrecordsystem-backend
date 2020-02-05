@@ -9,6 +9,7 @@ const futsalRouter = require("./routes/futsal");
 const customerRouter = require("./routes/customers");
 const eventRouter = require("./routes/events");
 const feedbackRouter = require("./routes/feedbacks");
+const bookingRouter = require("./routes/booking");
 const auth = require("./auth");
 
 const app = express();
@@ -23,9 +24,10 @@ app.use("/users", userRouter);
 app.use("/upload", uploadRouter);
 app.use("/futsal", futsalRouter);
 app.use(auth.verifyUser);
-app.use("/customers", customerRouter);
-app.use("/events",eventRouter);
-app.use("/feedbacks",feedbackRouter);
+app.use("/customers", auth.verifyUser, customerRouter);
+app.use("/events", auth.verifyUser, eventRouter);
+app.use("/feedbacks", auth.verifyUser, feedbackRouter);
+app.use("/booking", auth.verifyUser, bookingRouter);
 
 //database config
 mongoose.connect(process.env.URL, {
@@ -38,7 +40,7 @@ mongoose.connect(process.env.URL, {
 }, (err) => console.log(err));
 
 
-app.listen(process.env.PORT,()=>{
+app.listen(process.env.PORT, () => {
     console.log(`App is running at localhost:${process.env.PORT}`);
 });
 
