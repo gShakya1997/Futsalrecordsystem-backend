@@ -69,18 +69,18 @@ router.post("/login", (req, res, next) => {
 })
 
 //get profile detail
-router.get("/profile", auth.verifyUser, (req, res, next) => {
-    // console.log(req.futsal);
-    res.json({
-        _id: req.futsal._id,
-        futsalName: req.futsal.futsalName,
-        futsalImage: req.futsal.futsalImage,
-        futsalEmail: req.futsal.futsalEmail,
-        futsalPhone: req.futsal.futsalPhone,
-        futsalOpeningTime: req.futsal.futsalOpeningTime,
-        futsalClosingTime: req.futsal.futsalClosingTime,
-        futsalPrice: req.futsal.futsalPrice
-    });
+router.route("/profile", auth.verifyUser)
+    .get((req, res, next) => {
+        res.json({
+            _id: req.futsal._id,
+            futsalName: req.futsal.futsalName,
+            futsalImage: req.futsal.futsalImage,
+            futsalEmail: req.futsal.futsalEmail,
+            futsalPhone: req.futsal.futsalPhone,
+            futsalOpeningTime: req.futsal.futsalOpeningTime,
+            futsalClosingTime: req.futsal.futsalClosingTime,
+            futsalPrice: req.futsal.futsalPrice
+        });
 });
 
 router.route("/:id")
