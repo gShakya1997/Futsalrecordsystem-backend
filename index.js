@@ -10,10 +10,11 @@ const customerRouter = require("./routes/customers");
 const eventRouter = require("./routes/events");
 const feedbackRouter = require("./routes/feedbacks");
 const bookingRouter = require("./routes/booking");
+const allFeedbacksRouter = require("./routes/allFeedbacks");
 const auth = require("./auth");
 
 const app = express();
-app.options("*", cors());
+app.use(cors());
 app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -23,7 +24,8 @@ app.use(express.static(__dirname + "/public"));
 app.use("/users", userRouter);
 app.use("/upload", uploadRouter);
 app.use("/futsal", futsalRouter);
-app.use(auth.verifyUser);
+app.use("/allfeedbacks",allFeedbacksRouter)
+// app.use(auth.verifyUser);
 app.use("/customers", auth.verifyUser, customerRouter);
 app.use("/events", auth.verifyUser, eventRouter);
 app.use("/feedbacks", auth.verifyUser, feedbackRouter);

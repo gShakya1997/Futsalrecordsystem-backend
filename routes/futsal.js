@@ -76,24 +76,27 @@ router.get("/profile", auth.verifyUser, (req, res, next) => {
         futsalName: req.futsal.futsalName,
         futsalImage: req.futsal.futsalImage,
         futsalEmail: req.futsal.futsalEmail,
-        futsalPhone: req.futsal.futsalPhone
+        futsalPhone: req.futsal.futsalPhone,
+        futsalOpeningTime: req.futsal.futsalOpeningTime,
+        futsalClosingTime: req.futsal.futsalClosingTime,
+        futsalPrice: req.futsal.futsalPrice
     });
 });
 
-router.post("/logout", auth.verifyUser, (req, res, next) => {
-    console.log(req.futsal);
-    console.log(req.headers.authorization);
-    let clearToken = req.headers.authorization;
-    if (req.futsal) {
-        res.json({
-            clearToken: "",
-            status: "Logout"
-        })
-    } else {
-        let err = new Error("You are not logged in");
-        err.status = 403;
-        next(err);
-    }
-});
+router.route("/:id")
+    .put(auth.verifyUser ,(req,res,next)=> {
+        Futsal.findOneAndUpdate({_id: req.params.id},{$set:req.body},{new: true})
+        .then((reply)=>{
+            if (reply== null) throw new Error("Futsal not found");
+            res.json(reply);
+        }).catch(next);
+    })
+    .delete((req,res,next)=>{
+        Futsal.findOneAndDelete({_id:req.params.id})
+        .then((futsal)=>{
+            if (futsal== null) throw new Error("Futsal not found");
+            res.json(futsal);
+        }).catch(next);
+    });
 
 module.exports = router;
