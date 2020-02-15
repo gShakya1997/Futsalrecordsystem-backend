@@ -40,7 +40,6 @@ router.post("/register", (req, res, next) => {
 
 //login
 router.post("/login", (req, res, next) => {
-    console.log(req.body);
     User.findOne({
         username: req.body.username
     })
@@ -106,5 +105,21 @@ router.get("/profile", auth.verifyUser2, (req, res, next) => {
         phone: req.users.phone
     });
 });
+
+router.route("/:id", auth.verifyUser2)
+    .put((req,res,next)=> {
+        User.findOneAndUpdate({_id: req.params.id},{$set:req.body},{new: true})
+        .then((reply)=>{
+            if (reply== null) throw new Error("User not found");
+            res.json(reply);
+        }).catch(next);
+    })
+    .delete((req,res,next)=>{
+        User.findOneAndDelete({_id:req.params.id})
+        .then((user)=>{
+            if (user== null) throw new Error("User not found");
+            res.json(user);
+        }).catch(next);
+    });
 
 module.exports = router;
