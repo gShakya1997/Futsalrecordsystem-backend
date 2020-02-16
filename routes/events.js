@@ -6,7 +6,6 @@ router.route("/")
     .post((req, res, next) => {
         let event = new Event(req.body);
         event.owner = req.futsal._id;
-        console.log(event);
         event.save()
             .then((event) => {
                 res.statusCode = 201;

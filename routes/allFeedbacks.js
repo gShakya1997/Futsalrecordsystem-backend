@@ -6,7 +6,6 @@ router.route("/")
 .get((req,res,next)=>{
 	Feedback.find()
 	.then((feedback)=>{
-		console.log(feedback);
 		res.json(feedback);
 	})
 	.catch((err)=>{

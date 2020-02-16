@@ -24,8 +24,7 @@ app.use(express.static(__dirname + "/public"));
 app.use("/users", userRouter);
 app.use("/upload", uploadRouter);
 app.use("/futsal", futsalRouter);
-app.use("/allfeedbacks",allFeedbacksRouter)
-// app.use(auth.verifyUser);
+app.use("/allfeedbacks",allFeedbacksRouter);
 app.use("/customers", auth.verifyUser, customerRouter);
 app.use("/events", auth.verifyUser, eventRouter);
 app.use("/feedbacks", auth.verifyUser, feedbackRouter);

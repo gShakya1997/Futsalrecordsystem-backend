@@ -6,7 +6,6 @@ router.route("/")
     .post((req, res, next) => {
         let booking = new Booking(req.body);
         booking.owner = req.futsal._id;
-        console.log(booking);
         booking.save()
             .then((booking) => {
                 res.statusCode = 201;
@@ -16,7 +15,6 @@ router.route("/")
     .get((req, res, next) => {
         Booking.find({ owner: req.futsal._id })
             .then((booking) => {
-                console.log(booking);
                 res.json(booking);
             })
             .catch((err) => {

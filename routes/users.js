@@ -73,7 +73,6 @@ router.post("/login", (req, res, next) => {
 router.get("/futsalList", auth.verifyUser2, (req, res, next) => {
     Futsal.find()
         .then((futsal) => {
-            console.log(futsal);
             res.json(futsal);
         })
         .catch((err) => {
@@ -85,7 +84,6 @@ router.get("/futsalList", auth.verifyUser2, (req, res, next) => {
 router.get("/eventList", auth.verifyUser2, (req, res, next) => {
     Event.find()
     .then((event)=>{
-        console.log(event);
         res.json(event);
     })
     .catch((err)=>{
@@ -95,7 +93,6 @@ router.get("/eventList", auth.verifyUser2, (req, res, next) => {
 
 //Get profile
 router.get("/profile", auth.verifyUser2, (req, res, next) => {
-    console.log(req.users);
     res.json({
         _id: req.users._id,
         username: req.users.username,
@@ -106,6 +103,7 @@ router.get("/profile", auth.verifyUser2, (req, res, next) => {
     });
 });
 
+//delete and update by ID
 router.route("/:id", auth.verifyUser2)
     .put((req,res,next)=> {
         User.findOneAndUpdate({_id: req.params.id},{$set:req.body},{new: true})

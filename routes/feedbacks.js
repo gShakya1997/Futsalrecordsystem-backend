@@ -6,7 +6,6 @@ router.route("/")
     .post((req, res, next) => {
         let feedback = new Feedback(req.body);
         feedback.owner = req.futsal._id;
-        console.log(feedback);
         feedback.save()
             .then((feedback) => {
                 res.statusCode = 201;

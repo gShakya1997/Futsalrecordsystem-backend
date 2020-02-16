@@ -36,27 +36,27 @@ describe('User Upload Testing', () => {
             });
     });
 
-    // //Update User
+        // Update User
 
-    // it('updateuser testing', () => {
-    //     const userupdate = {
-    //         username: 'NikhilKapali'
-    //     }
-    //     console.log(id)
-    //     return User.findByIdAndUpdate(id, userupdate, {
-    //         new: true
-    //     }).then((userupdate) => {
-    //         expect(userupdate.username).toEqual('NikhilKapali');
-    //     });
-    // });
+        it('updateuser testing', () => {
+            const userupdate = {
+                username: 'NikhilKapali'
+            }
+            console.log(id)
+            return User.findByIdAndUpdate(id, userupdate, {
+                new: true
+            }).then((userupdate) => {
+                expect(userupdate.username).toEqual('NikhilKapali');
+            });
+        });
 
-    // // User Delete Testing
-    // it('testing User Delete', async () => {
-    //     const status = await
-    //         User.deleteMany({
-    //             username: 'GunjanShakya'
-    //         });
-    //     expect(status.ok).toBe(1);
-    // });
+    // User Delete Testing
+    it('testing User Delete', async () => {
+        const status = await
+            User.deleteMany({
+                username: 'GunjanShakya'
+            });
+        expect(status.ok).toBe(1);
+    });
 
 });

@@ -4,7 +4,7 @@
   "description": "Api for andriod and website",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --ignore ./public/upload index.js",
+    "start": "node_modules/.bin/eslint *.js && nodemon --ignore ./public/upload index.js",
     "test": "jest"
   },
   "repository": {
@@ -29,5 +29,9 @@
     "morgan": "^1.9.1",
     "multer": "^1.4.2",
     "nodemon": "^2.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.18.3"
   }
 }
